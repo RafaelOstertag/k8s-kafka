@@ -47,22 +47,8 @@ pipeline {
 
             steps {
                 withKubeConfig(credentialsId: 'a9fe556b-01b0-4354-9a65-616baccf9cac') {
-                    sh """
-if ! helm status -n funnel zookeeper
-then
-  helm install -n funnel zookeeper helm/zookeeper
-else
-  helm upgrade -n funnel zookeeper helm/zookeeper
-fi
-"""
-                    sh """
-if ! helm status -n funnel kafka
-then
-  helm install -n funnel kafka helm/kafka
-else
-  helm upgrade -n funnel kafka helm/kafka
-fi
-"""
+                    sh "helm upgrade -n funnel -i zookeeper helm/zookeeper"
+                    sh "helm upgrade -n funnel -i kafka helm/kafka"
                 }
             }
         }
